@@ -36,7 +36,7 @@ get "/" do
   redirect "https://github.com/nomadium/linzer", 307
 end
 
-get "/example" do
+get "/example/hello" do
   content_type :text
   "Hello world!"
 end
