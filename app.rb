@@ -28,20 +28,26 @@ helpers do
 end
 
 after do
-  content_type :text
   response.headers["date"] = Time.now.httpdate
   Linzer.sign!(response, key: app_private_key, components: %w[@status date])
 end
 
 get "/" do
+  redirect "https://github.com/nomadium/linzer", 307
+end
+
+get "/example" do
+  content_type :text
   "Hello world!"
 end
 
-route :get, :post, "/verify" do
+route :get, :post, "/example/verify" do
   halt 401, "Signature is required!" unless signed? request
+  content_type :text
   "Got a valid signed request!"
 end
 
-get "/pubkey" do
+get "/example/pubkey" do
+  content_type :text
   app_public_key
 end
